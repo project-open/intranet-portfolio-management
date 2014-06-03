@@ -43,15 +43,16 @@ ad_page_contract {
 # 2. Defaults & Security
 # ---------------------------------------------------------------
 
+set program_enabled_p "f"
 if {[catch {
     db_1row get_category_info "SELECT category_id as project_type_id, enabled_p as program_enabled_p FROM im_categories WHERE category_type = 'Intranet Project Type' and category = 'Program'" 
 } err_msg]} {
     ad_return_complaint 1  "[lang::message::lookup "" intranet-core.Db_Error "DB Error"] <br> $err_msg <br>Please inform your System Administrator"
-    return
+    ad_script_abort
 }
 
-if { f == $program_enabled_p } {
-    ad_return_complaint 1 "Configuration Error, Project Type 'Program' not enabled. Please inform your System Administrator"
+if {"f" == $program_enabled_p} {
+    ad_return_complaint 1 "<b>Program Management Not Enabled</b>:<br>The project type 'Program' is not enabled on this server.<br>Please inform your System Administrator"
 }
 
 # User id already verified by filters
