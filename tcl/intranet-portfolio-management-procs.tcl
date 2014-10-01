@@ -82,7 +82,7 @@ ad_proc -public im_program_portfolio_list_component {
     if {!$cron_mode_p} {
 	# This code is running as part of a normal HTML page
 	set return_url [im_url_with_query]
-	set wrench_gif [im_gif wrench ""]
+	set wrench_gif [im_gif wrench]
     } else {
 	# This code is running as part of a schduled procedure
 	set current_user_id $admin_user_id
