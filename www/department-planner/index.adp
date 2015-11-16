@@ -5,8 +5,8 @@
 <property name="sub_navbar">@sub_navbar;noquote@</property>
 <property name="left_navbar">@left_navbar_html;noquote@</property>
 
-<table width=100%><tr>
-<td width=50%></td>
+<table width="100%"><tr>
+<td width="50%"></td>
 <td>
 	<b>Department Planner</b>:<br>
 	This planner identifies bottlenecks in the execution of projects.<br>

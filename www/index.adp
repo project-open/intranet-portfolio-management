@@ -6,9 +6,9 @@
 
 @program_table_html;noquote@
 
-<table cellpadding=0 cellspacing=0 border=0 width=100%>
+<table cellpadding=0 cellspacing=0 border=0 width="100%">
 <tr>
-  <td valign=top width='50%'>
+  <td valign=top width="50%">
     <%= [im_component_bay left] %>
   </td>
 
