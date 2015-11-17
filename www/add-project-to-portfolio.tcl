@@ -13,7 +13,7 @@ ad_page_contract {
 # Default & Security
 # ------------------------------------------------------------------
 
-set current_user_id [ad_get_user_id]
+set current_user_id [ad_conn user_id]
 set page_title [lang::message::lookup "" intranet-portfolio-management.Add_a_project_to_the_portfolio "Add a project to the portfolio"]
 set context_bar [im_context_bar "" $page_title]
 

@@ -90,7 +90,7 @@ ad_proc -public im_program_portfolio_list_component {
 	set wrench_gif ""
     }
 
-    if {"" == $current_user_id || 0 == $current_user_id} { set current_user_id [ad_get_user_id] }
+    if {"" == $current_user_id || 0 == $current_user_id} { set current_user_id [ad_conn user_id] }
     set admin_p [im_is_user_site_wide_or_intranet_admin $current_user_id]
 
 

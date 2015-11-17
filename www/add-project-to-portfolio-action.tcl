@@ -14,7 +14,7 @@ ad_page_contract {
 # Default & Security
 # ------------------------------------------------------------------
 
-set current_user_id [ad_get_user_id]
+set current_user_id [ad_conn user_id]
 
 # get the current users permissions for this project
 im_project_permissions $current_user_id $program_id view read write admin

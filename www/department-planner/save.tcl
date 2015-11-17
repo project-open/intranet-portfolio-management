@@ -15,7 +15,7 @@ ad_page_contract {
 }
 
 set user_id [ad_maybe_redirect_for_registration]
-set user_name [im_name_from_user_id [ad_get_user_id]]
+set user_name [im_name_from_user_id [ad_conn user_id]]
 set edit_projects_all_p [im_permission $user_id "edit_projects_all"]
 set action_name "Save"
 set action_forbidden_msg [lang::message::lookup "" intranet-helpdesk.Action_Forbidden "<b>Unable to execute action</b>:<br>You don't have the permissions to execute the action '%action_name%' on this ticket."]
