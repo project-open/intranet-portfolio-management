@@ -74,7 +74,7 @@ if { 0 == $project_status_id } {
 }
 
 if { [empty_string_p $how_many] || $how_many < 1 } {
-    set how_many [ad_parameter -package_id [im_package_core_id] NumberResultsPerPage  "" 50]
+    set how_many [im_parameter -package_id [im_package_core_id] NumberResultsPerPage  "" 50]
 }
 set end_idx [expr $start_idx + $how_many]
 
@@ -335,7 +335,7 @@ set admin_html "<ul>"
 if {[im_permission $current_user_id "add_projects"]} {
     append admin_html "<li><a href=\"/intranet/projects/new\">[_ intranet-core.Add_a_new_project]</a>\n"
 
-    set new_from_template_p [ad_parameter -package_id [im_package_core_id] EnableNewFromTemplateLinkP "" 0]
+    set new_from_template_p [im_parameter -package_id [im_package_core_id] EnableNewFromTemplateLinkP "" 0]
     if {$new_from_template_p} {
         append admin_html "<li><a href=\"/intranet/projects/new-from-template\">[lang::message::lookup "" intranet-core.Add_a_new_project_from_Template "Add a new project from Template"]</a>\n"
     }
