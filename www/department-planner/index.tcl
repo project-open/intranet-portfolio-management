@@ -107,7 +107,7 @@ set sub_navbar [im_sub_navbar \
 
 set filter_html "
 	<form method=GET name=filter action='$this_base_url'>
-	[export_form_vars]
+	[export_vars -form {}]
 	<table border=0 cellpadding=0 cellspacing=1>
 "
 
