@@ -48,7 +48,7 @@ set read_p [db_string report_perms "
         where   m.label = :menu_label
 " -default 'f']
 set read_p "t"
-if {![string equal "t" $read_p]} {
+if {"t" ne $read_p } {
     ad_return_complaint 1 [lang::message::lookup "" intranet-reporting.You_dont_have_permissions "You don't have the necessary permissions to view this page"]
     ad_script_abort
 }
@@ -78,7 +78,7 @@ db_1row todays_date "
 "
 
 if {![info exists start_date] || "" == $start_date} { set start_date "$todays_year-01-01" }
-if {![info exists end_date] || "" == $end_date} { set end_date "[expr $todays_year+1]-01-01" }
+if {![info exists end_date] || "" == $end_date} { set end_date "[expr {$todays_year+1}]-01-01" }
 
 set report_start_date $start_date
 set report_end_date $end_date

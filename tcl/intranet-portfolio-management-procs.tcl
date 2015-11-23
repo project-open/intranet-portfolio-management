@@ -133,17 +133,17 @@ ad_proc -public im_program_portfolio_list_component {
     # Generate SQL Query
 
     set extra_select [join $extra_selects ",\n\t"]
-    if { ![empty_string_p $extra_select] } {
+    if { $extra_select ne "" } {
 	set extra_select ",\n\t$extra_select"
     }
 
     set extra_from [join $extra_froms ",\n\t"]
-    if { ![empty_string_p $extra_from] } {
+    if { $extra_from ne "" } {
 	set extra_from ",\n\t$extra_from"
     }
 
     set extra_where [join $extra_wheres "and\n\t"]
-    if { ![empty_string_p $extra_where] } {
+    if { $extra_where ne "" } {
 	set extra_where "and\n\t$extra_where"
     }
 
@@ -227,7 +227,7 @@ ad_proc -public im_program_portfolio_list_component {
     # Format the List Table Header
 
     # Set up colspan to be the number of headers + 1 for the # column
-    set colspan [expr [llength $column_headers] + 1]
+    set colspan [expr {[llength $column_headers] + 1}]
 
     set table_header_html "<tr>\n"
     foreach col $column_headers {
@@ -291,7 +291,7 @@ ad_proc -public im_program_portfolio_list_component {
         if {"" == $percent_completed} { set percent_completed 0.0 }
 
 	set url [im_maybe_prepend_http $url]
-	if { [empty_string_p $url] } {
+	if { $url eq "" } {
 	    set url_string "&nbsp;"
 	} else {
 	    set url_string "<a href=\"$url\">$url</a>"
@@ -299,7 +299,7 @@ ad_proc -public im_program_portfolio_list_component {
 
 	# Append together a line of data based on the "column_vars" parameter list
 	if {!$cron_mode_p} {
-	    set row_html "<tr$bgcolor([expr $ctr % 2])>\n"
+	    set row_html "<tr$bgcolor([expr {$ctr % 2}])>\n"
 	    foreach column_var $column_vars {
 		append row_html "\t<td valign=top>"
 		set cmd "append row_html $column_var"
@@ -314,13 +314,13 @@ ad_proc -public im_program_portfolio_list_component {
 	if {"" == $cost_quotes_cache} { set cost_quotes_cache 0 }
 	if {"" == $project_budget} { set project_budget 0 }
 
-	set quotes_total [expr $quotes_total + $cost_quotes_cache]
-	set budget_total [expr $budget_total + $project_budget]
-	set plain_total [expr $plain_total + 1.0]
+	set quotes_total [expr {$quotes_total + $cost_quotes_cache}]
+	set budget_total [expr {$budget_total + $project_budget}]
+	set plain_total [expr {$plain_total + 1.0}]
 
-	set quotes_done [expr $quotes_done + $cost_quotes_cache * $percent_completed / 100.0]
-	set budget_done [expr $budget_done + $project_budget * $percent_completed / 100.0]
-	set plain_done [expr $plain_done + 1.0 * $percent_completed / 100.0]
+	set quotes_done [expr {$quotes_done + $cost_quotes_cache * $percent_completed / 100.0}]
+	set budget_done [expr {$budget_done + $project_budget * $percent_completed / 100.0}]
+	set plain_done [expr {$plain_done + 1.0 * $percent_completed / 100.0}]
 
 	if {!$cron_mode_p} {
 	    foreach var $var_list {
@@ -347,16 +347,16 @@ ad_proc -public im_program_portfolio_list_component {
     # Allow to use either quotes or budget for calculation
     set completed 0.0
     if {0.0 != $plain_total} {
-	set completed [expr round(1000.0 * $plain_done / $plain_total) / 10.0]
+	set completed [expr {round(1000.0 * $plain_done / $plain_total) / 10.0}]
     }
     # Quotes override aritmetic median
     if {0.0 != $quotes_total} {
 	# Santa: Projects usually don't have a budget...
-	# set completed [expr round(1000.0 * $quotes_done / $quotes_total) / 10.0]
+	# set completed [expr {round(1000.0 * $quotes_done / $quotes_total) / 10.0}]
     }
     # budget overrides quotes
     if {0.0 != $budget_total} {
-	set completed [expr round(1000.0 * $budget_done / $budget_total) / 10.0]
+	set completed [expr {round(1000.0 * $budget_done / $budget_total) / 10.0}]
     }
 
     # Total summary line:
@@ -400,7 +400,7 @@ ad_proc -public im_program_portfolio_list_component {
     }
 
     # Show a reasonable message when there are no result rows:
-    if { [empty_string_p $table_body_html] } {
+    if { $table_body_html eq "" } {
 
 	# Let the component disappear if there are no projects...
 	if {!$show_empty_project_list_p} { return "" }

@@ -14,7 +14,7 @@ ad_page_contract {
     { return_url "/intranet-portfolio-management/department-planner/index" }
 }
 
-set user_id [ad_maybe_redirect_for_registration]
+set user_id [auth::require_login]
 set user_name [im_name_from_user_id [ad_conn user_id]]
 set edit_projects_all_p [im_permission $user_id "edit_projects_all"]
 set action_name "Save"

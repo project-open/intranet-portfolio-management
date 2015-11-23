@@ -33,7 +33,7 @@ db_1row todays_date "
 "
 
 if {![info exists start_date] || "" == $start_date} { set start_date "$todays_year-01-01" }
-if {![info exists end_date] || "" == $end_date} { set end_date "[expr $todays_year+1]-01-01" }
+if {![info exists end_date] || "" == $end_date} { set end_date "[expr {$todays_year+1}]-01-01" }
 
 
 # Check that Start & End-Date have correct format
@@ -112,7 +112,7 @@ template::multirow foreach department_planner {
 
 	set bgcolor_html "bgcolor=\#80FF80"
 	if {$rem_days < 0.0} { set bgcolor_html "bgcolor=\#FF8080" }
-	append body_html "<td $bgcolor_html>[expr round(10.0 * $rem_days) / 10.0]</td>"
+	append body_html "<td $bgcolor_html>[expr {round(10.0 * $rem_days) / 10.0}]</td>"
     }
     append body_html "</tr>\n"
 

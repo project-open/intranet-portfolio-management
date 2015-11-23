@@ -71,7 +71,7 @@ ad_proc -public im_department_planner_get_list_multirow {
 	ad_script_abort
     }
     
-    set report_duration_days [expr $report_end_date_julian - $report_start_date_julian]
+    set report_duration_days [expr {$report_end_date_julian - $report_start_date_julian}]
 
     # Get the DynView view to show
     set view_id [db_string get_view {} -default 0]
@@ -125,7 +125,7 @@ ad_proc -public im_department_planner_get_list_multirow {
 	switch $uom_id {
 	    320 {
 		# Hour
-		set task_planned_days [expr $planned_units / $hours_per_day]
+		set task_planned_days [expr {$planned_units / $hours_per_day}]
 	    }
 	    321 {
 		# Day
@@ -141,11 +141,11 @@ ad_proc -public im_department_planner_get_list_multirow {
 	
 	# Adjust planned days by the the already completed part.
 	ns_log Notice "department-planner: task_planned_days=$task_planned_days"
-	set task_planned_days [expr 1.0 * $task_planned_days * (100.0 - $percent_completed) / 100.0]
+	set task_planned_days [expr {1.0 * $task_planned_days * (100.0 - $percent_completed) / 100.0}]
 	ns_log Notice "department-planner: task_planned_days_uncompleted=$task_planned_days"
 	
 	# Calculate total calendar task length
-	set task_len_calendar_days [expr $task_end_date_julian - $task_start_date_julian]
+	set task_len_calendar_days [expr {$task_end_date_julian - $task_start_date_julian}]
 	if {$task_len_calendar_days <= 0} {
 	    append error_html "<li><b>Invalid start and end date for task <a href=$task_url>$project_name</a></b>:<br>
 		End date should be later then start date.<br>
@@ -160,11 +160,11 @@ ad_proc -public im_department_planner_get_list_multirow {
 	if {$report_start_date_julian > $task_start_date_julian} { set startj $report_start_date_julian }
 	set endj $task_end_date_julian
 	if {$report_end_date_julian > $task_end_date_julian} { set endj $report_end_date_julian }
-	set task_len_calendar_days_within_period [expr $endj - $startj]
+	set task_len_calendar_days_within_period [expr {$endj - $startj}]
 	ns_log Notice "department-planner: task_len_calendar_days_within_period=$task_len_calendar_days_within_period"
 	
 	# Adjust the planned days by the percentage in which they fall into the reporting period
-	set $task_planned_days [expr 1.0 * $task_planned_days * $task_len_calendar_days_within_period / $task_len_calendar_days]
+	set $task_planned_days [expr {1.0 * $task_planned_days * $task_len_calendar_days_within_period / $task_len_calendar_days}]
 	ns_log Notice "department-planner: task_planned_days_uncompleted_in_interval=$task_planned_days"
 	
 	# Store the list of tasks with the main project
@@ -181,7 +181,7 @@ ad_proc -public im_department_planner_get_list_multirow {
 	array set planned_days_hash $planned_days_pairs
 	set planned_days 0.0
 	if {[info exists planned_days_hash($cost_center_id)]} { set planned_days $planned_days_hash($cost_center_id) }
-	set planned_days_hash($cost_center_id) [expr $planned_days + $task_planned_days]
+	set planned_days_hash($cost_center_id) [expr {$planned_days + $task_planned_days}]
 	set planned_days_pairs_hash($main_project_id) [array get planned_days_hash]
        
        
@@ -209,7 +209,7 @@ ad_proc -public im_department_planner_get_list_multirow {
 
 	# If there are no department_planner_days the check if employee_available_percent is set:
 	if {"" == $available_days && "" != $employee_available_percent && 0 != $employee_available_percent} {
-	    set available_days [expr round(10 * $employee_available_percent / 100.0 * $work_days_per_year * $report_duration_days / 365.0) / 10.0]
+	    set available_days [expr {round(10 * $employee_available_percent / 100.0 * $work_days_per_year * $report_duration_days / 365.0) / 10.0}]
 	}
 
 	# Skip if there are no resources assigned nor capacity specified
@@ -277,7 +277,7 @@ ad_proc -public im_department_planner_get_list_multirow {
 	    set planned_days 0.0
 	    if {[info exists planned_days_hash($dept_id)]} { set planned_days $planned_days_hash($dept_id) }
 	    set dept_task_url [export_vars -base "/intranet-timesheet2-tasks/index" {{project_id $main_project_id} {cost_center_id $dept_id}}]
-	    set "cc_$dept_id" [expr round(10.0 * $planned_days) / 10.0]
+	    set "cc_$dept_id" [expr {round(10.0 * $planned_days) / 10.0}]
 	}
     }
     
