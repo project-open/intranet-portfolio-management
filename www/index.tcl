@@ -536,7 +536,7 @@ set filter_html $__adp_output
 set left_navbar_html "
 	<div class='filter-block'>
         	<div class='filter-title'>
-	           #intranet-portfolio-management.FilterPrograms# $filter_admin_html
+	           [_ intranet-portfolio-management.FilterPrograms] $filter_admin_html
         	</div>
             	$filter_html
       	</div>
@@ -551,12 +551,3 @@ set program_table_inner_html "
 	</table>
 "
 set program_table_html [im_table_with_title [lang::message::lookup "" intranet-portfolio-management.Programs "Programs"] $program_table_inner_html]
-
-# append left_navbar_html "
-#      	<div class='filter-block'>
-#        <div class='filter-title'>
-#            #intranet-core.Admin_Projects#
-#        </div>
-#	$admin_html
-#      	</div>
-# "
