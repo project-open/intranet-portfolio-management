@@ -1,6 +1,5 @@
-
-<table>
 <form action=save>
+<table>
 <%= [export_vars return_url] %>
 @header_html;noquote@
 @first_line_html;noquote@
@@ -11,6 +10,7 @@
 </td>
 </tr>
 </table>
+</form>
 
 <if "" ne @error_html@>
 <br>
