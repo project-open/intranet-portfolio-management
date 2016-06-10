@@ -16,3 +16,8 @@ extra_select, extra_where, sort_order, visible_for) values (30010,300,'Project N
 '"<A HREF=/intranet/projects/view?project_id=$project_id>[string range $project_name 0 30]</A>"','','',10,'');
 
 
+select im_menu__delete(
+       (select menu_id from im_menus where package_name = 'intranet-portfolio-management' and name = 'Department Planner')
+);
+
+
