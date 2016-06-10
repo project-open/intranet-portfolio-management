@@ -390,8 +390,8 @@ ad_proc -public im_program_portfolio_list_component {
 		update im_projects set
 			percent_completed = :completed,
 			project_budget = :budget_total,
-			start_date = least(:start_date_min, :end_date_max),
-			end_date = greatest(:start_date_min, :end_date_max)
+			start_date = least(:start_date_min::date, :end_date_max::date),
+			end_date = greatest(:start_date_min::date, :end_date_max::date)
 		where
 			project_id = :program_id
 	"
