@@ -16,6 +16,10 @@
 
         <!-- No dependency information -->
 
+        <provides url="intranet-portfolio-management" version="5.0.0.0.0"/>
+        <requires url="intranet-core" version="4.0.4.0.0"/>
+        <requires url="intranet-reporting-dashboard" version="4.0.4.0.0"/>
+
         <callbacks>
         </callbacks>
         <parameters>
