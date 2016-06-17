@@ -424,3 +424,42 @@ ad_proc -public im_program_portfolio_list_component {
 	</ul>
     "
 }
+
+
+
+
+
+# ----------------------------------------------------------------------
+# Portlets
+# ---------------------------------------------------------------------
+
+ad_proc -public sencha_scatter_diagram {
+    {-diagram_width 200 }
+    {-diagram_height 200 }
+    {-diagram_caption "" }
+    {-diagram_x_title "" }
+    {-diagram_y_title "" }
+    -sql:required
+} {
+    Returns a HTML code with a Sencha scatter diagram.
+    @param sql A sql statement returning the rows x_axis, 
+	y_axis, color and diameter for each dot to be displayed.
+} {
+    # Sencha check and permissions
+    if {![im_sencha_extjs_installed_p]} { return "" }
+    im_sencha_extjs_load_libraries
+
+    set params [list \
+		    [list diagram_width $diagram_width] \
+		    [list diagram_height $diagram_height] \
+		    [list diagram_caption $diagram_caption] \
+		    [list diagram_x_title $diagram_x_title] \
+		    [list diagram_y_title $diagram_y_title] \
+		    [list sql $sql] \
+    ]
+
+    set result [ad_parse_template -params $params "/packages/intranet-reporting-dashboard/lib/scatter-diagram"]
+    return [string trim $result]
+}
+
+
