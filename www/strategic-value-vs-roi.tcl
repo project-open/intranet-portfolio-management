@@ -31,8 +31,12 @@ set current_user_id [auth::require_login]
 set subsite_id [ad_conn subsite_id]
 set page_title [lang::message::lookup "" intranet-portfolio-management.Strategic_Value_vs_ROI "Strategic Value vs. ROI"] 
 set context_bar [im_context_bar $page_title]
+set main_navbar_label "portfolio"
 set page_focus "im_header_form.keywords"
 set return_url [im_url_with_query]
+
+set left_navbar_html ""
+set sub_navbar ""
 
 if {![im_permission $current_user_id "view_projects_all"]} {
     ad_return_complaint 1 "You don't have the right to see all projects"
