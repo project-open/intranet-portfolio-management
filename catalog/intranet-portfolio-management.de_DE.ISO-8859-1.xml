@@ -2,6 +2,9 @@
 <message_catalog package_key="intranet-portfolio-management" locale="de_DE" charset="ISO-8859-1">
 
   <msg key="FilterPrograms">Programme filtern</msg>
+  <msg key="Programs">Programme</msg>
   <msg key="ProgramStatus">Programm Status</msg>
   <msg key="ProjectPrograms">Programme</msg>
+  <msg key="Risk_vs__ROI">Risiko vs. ROI</msg>
+  <msg key="Strategic_Value_vs__ROI">Strategischer Wert vs. ROI</msg>
 </message_catalog>
