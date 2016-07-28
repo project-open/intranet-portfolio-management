@@ -200,11 +200,11 @@ extra_select, extra_where, sort_order, visible_for) values (30085,300,'Cur Costs
 --
 
 
-alter table im_projects add column project_strategic_value numeric(12,1);
-alter table im_projects add column project_roi numeric(12,1);
+alter table im_projects add column score_strategic_value numeric(12,1);
+alter table im_projects add column score_roi numeric(12,1);
 
-SELECT im_dynfield_attribute_new ('im_project', 'project_strategic_value', 'Strategic Value', 'numeric', 'float', 'f');
-SELECT im_dynfield_attribute_new ('im_project', 'project_roi', 'ROI', 'numeric', 'float', 'f');
+SELECT im_dynfield_attribute_new ('im_project', 'score_strategic_value', 'Strategic Value', 'numeric', 'float', 'f');
+SELECT im_dynfield_attribute_new ('im_project', 'score_roi', 'ROI', 'numeric', 'float', 'f');
 
 
 
@@ -241,10 +241,10 @@ insert into im_view_columns (column_id, view_id, column_name, column_render_tcl,
 sort_order) values (30150, 301, 'Done', '"$percent_completed_rounded%"', 50);
 
 insert into im_view_columns (column_id, view_id, column_name, column_render_tcl, 
-sort_order) values (30160, 301, 'Strategic<br>Value', '$project_strategic_value', 60);
+sort_order) values (30160, 301, 'Strategic<br>Value', '$score_strategic_value', 60);
 
 insert into im_view_columns (column_id, view_id, column_name, column_render_tcl, 
-sort_order) values (30170, 301, 'ROI', '$project_roi', 70);
+sort_order) values (30170, 301, 'ROI', '$score_roi', 70);
 
 
 
@@ -267,8 +267,8 @@ sort_order) values (30170, 301, 'ROI', '$project_roi', 70);
 -- 	null,					-- view_name
 -- 	10,					-- sort_order
 -- 	'sencha_scatter_diagram -diagram_width 600 -diagram_height 600 -sql "
--- 		select	p.project_strategic_value as x_axis,
--- 			p.project_roi as y_axis,
+-- 		select	p.score_strategic_value as x_axis,
+-- 			p.score_roi as y_axis,
 -- 			case	when p.on_track_status_id = 66 then ''green''
 -- 				when p.on_track_status_id = 67 then ''yellow''
 -- 				when p.on_track_status_id = 68 then ''red''
@@ -278,7 +278,7 @@ sort_order) values (30170, 301, 'ROI', '$project_roi', 70);
 -- 		from	im_projects p
 -- 		where	p.parent_id is null and
 -- 			p.project_status_id not in (select * from im_sub_categories([im_project_status_closed])) and
--- 			p.project_roi is not null
+-- 			p.score_roi is not null
 -- 		order by p.project_id
 -- 	" -diagram_caption "Strategic value vs. ROI"'
 -- );
