@@ -44,7 +44,7 @@ if {![im_permission $current_user_id "view_projects_all"]} {
 
 set html ""
 set sql "
-	select	coalesce(p.project_roi, 0.0) as y_axis,
+	select	coalesce(p.score_roi, 0.0) as y_axis,
 		coalesce((
 			-- calculate the weighted risk value		
 			select	sum(coalesce(r.risk_impact * r.risk_probability_percent / 100.0, 0))
@@ -68,6 +68,9 @@ set sql "
 
 # ad_return_complaint 1 "<pre>[join [db_list_of_lists asdf $sql] "\n"]</pre>"
 
+set risk_as_perc_of_budget_l10n [lang::message::lookup "" intranet-portfolio-management.Risk_as_perc_of_budget "Risk (as % of budget)"]
+set roi_months_l10n [lang::message::lookup "" intranet-portfolio-management.ROI_months "ROI (months)"]
+
 # Sencha check and permissions
 if {[im_sencha_extjs_installed_p]} {
     im_sencha_extjs_load_libraries
@@ -75,8 +78,8 @@ if {[im_sencha_extjs_installed_p]} {
 		    [list diagram_width 800] \
 		    [list diagram_height 600] \
 		    [list diagram_caption $page_title] \
-		    [list diagram_x_title "Risk (as % of budget)"] \
-		    [list diagram_y_title "ROI"] \
+		    [list diagram_x_title $risk_as_perc_of_budget_l10n] \
+		    [list diagram_y_title $roi_months_l10n] \
 		    [list sql $sql] \
     ]
     set html [ad_parse_template -params $params "/packages/intranet-reporting-dashboard/lib/scatter-diagram"]
