@@ -540,7 +540,6 @@ set left_navbar_html "
         	</div>
             	$filter_html
       	</div>
-      <hr/>
 "
 
 set program_table_inner_html "
