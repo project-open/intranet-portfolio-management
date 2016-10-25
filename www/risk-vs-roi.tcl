@@ -33,7 +33,7 @@ set page_title [lang::message::lookup "" intranet-portfolio-management.Risk_vs_R
 set context_bar [im_context_bar $page_title]
 set main_navbar_label "portfolio"
 set page_focus "im_header_form.keywords"
-set return_url [im_url_with_query]
+set page_url [im_url_with_query]
 
 set left_navbar_html ""
 set sub_navbar ""
@@ -84,4 +84,25 @@ if {[im_sencha_extjs_installed_p]} {
     ]
     set html [ad_parse_template -params $params "/packages/intranet-reporting-dashboard/lib/scatter-diagram"]
 }
+
+
+
+
+# ---------------------------------------------------------------
+# Sub-Navbar
+# ---------------------------------------------------------------
+
+set bind_vars [ns_set create]
+set parent_menu_id [im_menu_id_from_label $main_navbar_label]
+set sub_navbar [im_sub_navbar \
+		    -components \
+                    -base_url $page_url \
+                    -plugin_url $page_url \
+                    -menu_gif_type "none" \
+                    $parent_menu_id \
+		    $bind_vars "" \
+		    "pagedesriptionbar" \
+		    "risk_vs_roi" \
+]
+
 
