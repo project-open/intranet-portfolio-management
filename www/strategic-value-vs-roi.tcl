@@ -67,7 +67,7 @@ if {[im_sencha_extjs_installed_p]} {
 
     set params [list \
 		    [list diagram_width 800] \
-		    [list diagram_height 600] \
+		    [list diagram_height 500] \
 		    [list diagram_caption $page_title] \
 		    [list diagram_x_title "ROI"] \
 		    [list diagram_y_title "Strategic Value"] \

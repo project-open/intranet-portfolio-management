@@ -76,7 +76,7 @@ if {[im_sencha_extjs_installed_p]} {
     im_sencha_extjs_load_libraries
     set params [list \
 		    [list diagram_width 800] \
-		    [list diagram_height 600] \
+		    [list diagram_height 500] \
 		    [list diagram_caption $page_title] \
 		    [list diagram_x_title $risk_as_perc_of_budget_l10n] \
 		    [list diagram_y_title $roi_months_l10n] \
