@@ -215,7 +215,9 @@ ad_proc -public im_program_portfolio_list_component {
 		im_companies c
                 $extra_from
 	WHERE
-		p.company_id = c.company_id
+		p.company_id = c.company_id and
+		p.parent_id is null and
+		p.project_type_id not in (select im_sub_categories([im_project_type_program]))
 		$project_status_restriction
 		$project_type_restriction
                 $extra_where
