@@ -165,7 +165,7 @@ extra_select, extra_where, sort_order, visible_for) values (30000,300,'Ok',
 
 insert into im_view_columns (column_id, view_id, column_name, column_render_tcl,
 extra_select, extra_where, sort_order, visible_for) values (30010,300,'Project Name',
-'"<A HREF=/intranet/projects/view?project_id=$project_id>[string range $project_name 0 30]</A>"','','',10,'');
+'"<A HREF=/intranet/projects/index?&filter_advanced_p=1&program_id=$project_id>[string range $project_name 0 30]</A>"','','',10,'');
 
 insert into im_view_columns (column_id, view_id, column_name, column_render_tcl,
 extra_select, extra_where, sort_order, visible_for) values (30020,300,'Start','$start_date_formatted','','',20,'');
@@ -283,3 +283,45 @@ sort_order) values (30170, 301, 'ROI', '$score_roi', 70);
 -- 	" -diagram_caption "Strategic value vs. ROI"'
 -- );
 
+
+
+
+create or replace function inline_1 ()
+returns integer as '
+declare
+        v_menu			integer;
+        v_parent_menu           integer;
+        v_senior_managers       integer;
+begin
+
+	select menu_id into v_parent_menu from im_menus where label = ''main'';
+	select group_id into v_senior_managers from groups where group_name = ''Senior Managers''; 
+
+        v_menu := im_menu__new (
+                null,                                   -- p_menu_id
+                ''im_menu'',                            -- object_type
+                now(),                                  -- creation_date
+                null,                                   -- creation_user
+                null,                                   -- creation_ip
+                null,                                   -- context_id
+                ''intranet-portfolio-management'',	-- package_name
+                ''project_programs'',			-- label
+                ''Programs'', 				-- name
+                ''/intranet-portfolio-management/index'',   -- url
+                35,                                     -- sort_order
+                v_parent_menu,				-- parent_menu_id
+                null                                    -- p_visible_tcl
+        );
+ 
+        PERFORM acs_permission__grant_permission(v_menu, v_senior_managers, ''read'');
+        return 0;
+
+end;' language 'plpgsql';
+select inline_1 ();
+drop function inline_1();
+
+
+update im_view_columns set 
+	column_name = 'Program Name',
+	column_render_tcl = '"<A HREF=/intranet/projects/index?&filter_advanced_p=1&program_id=$project_id>[string range $project_name 0 30]</A>"'
+where	column_id = 30010;
