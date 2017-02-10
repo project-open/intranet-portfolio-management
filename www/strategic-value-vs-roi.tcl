@@ -46,7 +46,7 @@ set html ""
 
 set sql "
 	select	coalesce(p.score_strategic, 0.0) as y_axis,
-		coalesce(p.score_roi, 0.0) as x_axis,
+		coalesce(p.score_finance_roi, 0.0) as x_axis,
 		case	when p.on_track_status_id = 66 then 'green'
 			when p.on_track_status_id = 67 then 'yellow'
 			when p.on_track_status_id = 68 then 'red'
