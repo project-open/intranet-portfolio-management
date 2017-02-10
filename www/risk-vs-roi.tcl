@@ -44,7 +44,7 @@ if {![im_permission $current_user_id "view_projects_all"]} {
 
 set html ""
 set sql "
-	select	coalesce(p.score_roi, 0.0) as y_axis,
+	select	coalesce(p.score_finance_roi, 0.0) as y_axis,
 		coalesce((
 			-- calculate the weighted risk value		
 			select	sum(coalesce(r.risk_impact * r.risk_probability_percent / 100.0, 0))
