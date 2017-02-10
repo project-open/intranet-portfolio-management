@@ -33,11 +33,12 @@ returns integer as $$
 declare
 	v_menu			integer;
 	v_main_menu		integer;
+	v_portfolio_menu	integer;
 	v_employees		integer;
 BEGIN
 	select group_id into v_employees from groups where group_name = 'Employees';
 	select menu_id into v_main_menu from im_menus where label = 'main';
-	v_menu := im_menu__new (
+	v_portfolio_menu := im_menu__new (
 		null, 'im_menu', now(), null, null, null, -- meta information
 		'intranet-portfolio-management',	-- package_name
 		'portfolio',				-- label
@@ -47,24 +48,8 @@ BEGIN
 		v_main_menu,				-- parent_menu_id
 		null					-- p_visible_tcl
 	);
-	PERFORM acs_permission__grant_permission(v_menu, v_employees, 'read');
-	return 0;
-end;$$ language 'plpgsql';
-select inline_0 ();
-drop function inline_0 ();
+	PERFORM acs_permission__grant_permission(v_portfolio_menu, v_employees, 'read');
 
-
-
-
-create or replace function inline_0 ()
-returns integer as $$
-declare
-	v_menu				integer;
-	v_portfolio_menu		integer;
-	v_employees			integer;
-BEGIN
-	select group_id into v_employees from groups where group_name = 'Employees';
-	select menu_id into v_portfolio_menu from im_menus where label = 'portfolio';
 	v_menu := im_menu__new (
 		null, 'im_menu', now(), null, null, null,	-- meta information
 		'intranet-portfolio-management',		-- package_name
@@ -76,24 +61,7 @@ BEGIN
 		null						-- p_visible_tcl
 	);
 	PERFORM acs_permission__grant_permission(v_menu, v_employees, 'read');
-	return 0;
-end;$$ language 'plpgsql';
-select inline_0 ();
-drop function inline_0 ();
 
-
-
-
-
-create or replace function inline_0 ()
-returns integer as $$
-declare
-	v_menu				integer;
-	v_portfolio_menu		integer;
-	v_employees			integer;
-BEGIN
-	select group_id into v_employees from groups where group_name = 'Employees';
-	select menu_id into v_portfolio_menu from im_menus where label = 'portfolio';
 	v_menu := im_menu__new (
 		null, 'im_menu', now(), null, null, null,	-- meta information
 		'intranet-portfolio-management',		-- package_name
@@ -105,12 +73,36 @@ BEGIN
 		null						-- p_visible_tcl
 	);
 	PERFORM acs_permission__grant_permission(v_menu, v_employees, 'read');
+
+        v_menu := im_menu__new (
+                null,'im_menu',now(),null,null,null,
+                'intranet-portfolio-management',	-- package_name
+                'project_programs',			-- label
+                'Programs', 				-- name
+                '/intranet-portfolio-management/index',   -- url
+                35,                                     -- sort_order
+                (select menu_id from im_menus where label = 'projects'), -- parent_menu_id
+                null                                    -- p_visible_tcl
+        );
+        PERFORM acs_permission__grant_permission(v_menu, v_employees, 'read');
+
+        v_menu := im_menu__new (
+                null,'im_menu',now(),null,null,null,
+                'intranet-portfolio-management',	-- package_name
+                'project_portfolio_list',		-- label
+                'Portfolio List', 			-- name
+                '/intranet/projects/index?view_name=project_portfolio_list',   -- url
+                55,                                     -- sort_order
+                (select menu_id from im_menus where label = 'portfolio'), -- parent_menu_id
+                null                                    -- p_visible_tcl
+        );
+        PERFORM acs_permission__grant_permission(v_menu, v_employees, 'read');
+
+
 	return 0;
 end;$$ language 'plpgsql';
 select inline_0 ();
 drop function inline_0 ();
-
-
 
 
 
@@ -119,12 +111,7 @@ drop function inline_0 ();
 -- ----------------------------------------------------------------
 
 SELECT	im_component_plugin__new (
-	null,				-- plugin_id
-	'im_component_plugin',		-- object_type
-	now(),				-- creation_date
-	null,				-- creation_user
-	null,				-- creation_ip
-	null,				-- context_id
+	null,'im_component_plugin',now(),null,null,null,
 	'Program Portfolio List',	-- plugin_name
 	'intranet-portfolio-management', -- package_name
 	'right',			-- location
@@ -133,7 +120,6 @@ SELECT	im_component_plugin__new (
 	15,				-- sort_order
 	'im_program_portfolio_list_component -program_id $project_id'	-- component_tcl
 );
-
 SELECT acs_permission__grant_permission(
 	(select plugin_id from im_component_plugins where plugin_name = 'Program Portfolio List'),
 	(select group_id from groups where group_name = 'Employees'),
@@ -142,7 +128,9 @@ SELECT acs_permission__grant_permission(
 
 
 
-
+-- ----------------------------------------------------------------
+-- Views
+-- ----------------------------------------------------------------
 
 -- 300-309              intranet-portfolio-management
 -- 300			program_portfolio_list - displayed in a portlet of a project
@@ -180,7 +168,7 @@ insert into im_view_columns (column_id, view_id, column_name, column_render_tcl,
 extra_select, extra_where, sort_order, visible_for) values (30035,300,'Quoted','$cost_quotes_cache','','',35,'');
 
 insert into im_view_columns (column_id, view_id, column_name, column_render_tcl,
-extra_select, extra_where, sort_order, visible_for) values (30050,300,'Done','"$percent_completed_rounded%"','','',50,'');
+extra_select, extra_where, sort_order, visible_for) values (30050,300,'Done','"$percent_completed%"','','',50,'');
 
 insert into im_view_columns (column_id, view_id, column_name, column_render_tcl,
 extra_select, extra_where, sort_order, visible_for) values (30080,300,'Plan Costs','$planned_costs','','',80,'');
@@ -192,26 +180,9 @@ extra_select, extra_where, sort_order, visible_for) values (30085,300,'Cur Costs
 
 
 
-
-
-
 -------------------------------------------------------------
--- ROI + Strategic value
---
-
-
-alter table im_projects add column score_strategic_value numeric(12,1);
-alter table im_projects add column score_roi numeric(12,1);
-
-SELECT im_dynfield_attribute_new ('im_project', 'score_strategic', 'Strategic Value', 'numeric', 'float', 'f');
-SELECT im_dynfield_attribute_new ('im_project', 'score_roi', 'ROI', 'numeric', 'float', 'f');
-
-
-
+-- ROI + Strategic value views in ProjectListPage
 -------------------------------------------------------------
--- ROI + Strategic value views
---
-
 
 
 -- Strategic Value vs. ROI
@@ -219,7 +190,7 @@ SELECT im_dynfield_attribute_new ('im_project', 'score_roi', 'ROI', 'numeric', '
 delete from im_view_columns where view_id = 301;
 delete from im_views where view_id = 301;
 insert into im_views (view_id, view_name, visible_for)
-values (301, 'portfolio_strategic_vs_roi', 'view_projects');
+values (301, 'project_portfolio_list', 'view_projects');
 
 
 insert into im_view_columns (column_id, view_id, column_name, column_render_tcl, sort_order) 
@@ -238,90 +209,68 @@ insert into im_view_columns (column_id, view_id, column_name, column_render_tcl,
 sort_order) values (30140, 301, 'Budget', '$project_budget', 40);
 
 insert into im_view_columns (column_id, view_id, column_name, column_render_tcl, 
-sort_order) values (30150, 301, 'Done', '"$percent_completed_rounded%"', 50);
-
-insert into im_view_columns (column_id, view_id, column_name, column_render_tcl, 
-sort_order) values (30160, 301, 'Strategic<br>Value', '$score_strategic', 60);
-
-insert into im_view_columns (column_id, view_id, column_name, column_render_tcl, 
-sort_order) values (30170, 301, 'ROI', '$score_roi', 70);
+sort_order) values (30150, 301, 'Done', '"[expr int(10.0 * $percent_completed) / 10.0]%"', 50);
 
 
 
 
--- ------------------------------------------------------------
--- Add Strategic vs. ROI Portlet to ProjectListPage
--- ------------------------------------------------------------
-
--- SELECT im_component_plugin__new (
--- 	null,					-- plugin_id
--- 	'im_component_plugin',			-- object_type
--- 	now(),					-- creation_date
--- 	null,					-- creation_user
--- 	null,					-- creation_ip
--- 	null,					-- context_id
--- 	'Strategic vs. ROI',			-- plugin_name
--- 	'intranet-portfolio-management',	-- package_name
--- 	'right',				-- location
--- 	'/intranet/projects/index',		-- page_url
--- 	null,					-- view_name
--- 	10,					-- sort_order
--- 	'sencha_scatter_diagram -diagram_width 600 -diagram_height 600 -sql "
--- 		select	p.score_strategic as x_axis,
--- 			p.score_roi as y_axis,
--- 			case	when p.on_track_status_id = 66 then ''green''
--- 				when p.on_track_status_id = 67 then ''yellow''
--- 				when p.on_track_status_id = 68 then ''red''
--- 			end as color,
--- 			sqrt(coalesce(p.project_budget, p.presales_value, 200.0)) / 10.0 as diameter,
--- 			p.project_name as title
--- 		from	im_projects p
--- 		where	p.parent_id is null and
--- 			p.project_status_id not in (select * from im_sub_categories([im_project_status_closed])) and
--- 			p.score_roi is not null
--- 		order by p.project_id
--- 	" -diagram_caption "Strategic value vs. ROI"'
--- );
+-------------------------------------------------------------
+-- ROI + Strategic value
+-------------------------------------------------------------
 
 
-
-
-create or replace function inline_1 ()
-returns integer as '
+-- Create a number of predefined score_* fields
+create or replace function inline_0 ()
+returns integer as $body$
 declare
-        v_menu			integer;
-        v_parent_menu           integer;
-        v_senior_managers       integer;
-begin
+	row		RECORD;
+	v_count		integer;
+	v_sql		varchar;
+	v_pos		integer;
+BEGIN
+	v_pos	:= 0;
+	FOR row IN
+	        select * from (
+		select  10 as sort_order, 'score_strategic' as field, 'numeric' as widget, 'Score: Strategic' as name UNION
+		select  20 as sort_order, 'score_revenue' as field, 'numeric' as widget, 'Score: Revenue' as name UNION
+		select  30 as sort_order, 'score_customers' as field, 'numeric' as widget, 'Score: Customer Related Benefits' as name UNION
+		select  40 as sort_order, 'score_risk' as field, 'numeric' as widget, 'Score: Risk' as name UNION
+		select  50 as sort_order, 'score_capabilities' as field, 'numeric' as widget, 'Score: Capabilities' as name UNION
 
-	select menu_id into v_parent_menu from im_menus where label = ''main'';
-	select group_id into v_senior_managers from groups where group_name = ''Senior Managers''; 
+		select 100 as sort_order, 'score_finance_roi' as field, 'numeric' as widget, 'Financial Score: ROI' as name UNION
+		select 110 as sort_order, 'score_finance_npv' as field, 'numeric' as widget, 'Financial Score: NPV' as name UNION
+		select 120 as sort_order, 'score_finance_cost' as field, 'numeric' as widget, 'Financial Score: Cost' as name
+                ) t order by sort_order
+	LOOP
+		select	count(*) into v_count from user_tab_columns
+		where	lower(table_name) = 'im_projects' and lower(column_name) = row.field;
+		IF (v_count = 0) THEN
+			v_sql = 'alter table im_projects add ' || row.field || ' numeric';
+			EXECUTE v_sql;
+		END IF;
 
-        v_menu := im_menu__new (
-                null,                                   -- p_menu_id
-                ''im_menu'',                            -- object_type
-                now(),                                  -- creation_date
-                null,                                   -- creation_user
-                null,                                   -- creation_ip
-                null,                                   -- context_id
-                ''intranet-portfolio-management'',	-- package_name
-                ''project_programs'',			-- label
-                ''Programs'', 				-- name
-                ''/intranet-portfolio-management/index'',   -- url
-                35,                                     -- sort_order
-                v_parent_menu,				-- parent_menu_id
-                null                                    -- p_visible_tcl
-        );
- 
-        PERFORM acs_permission__grant_permission(v_menu, v_senior_managers, ''read'');
-        return 0;
+		-- DynField - a float value defined as also_hard_coded_p in table im_projects
+		select	count(*) into v_count from acs_attributes
+		where	pretty_name = row.name and object_type = 'im_project';
+		IF (v_count = 0) THEN
+			RAISE NOTICE 'creating % % %', row.field, row.name, row.widget;
+			PERFORM im_dynfield_attribute_new ('im_project', row.field, row.name, row.widget, 'float', 'f', 1000 + v_pos, 'f', 'im_projects');
+		ELSE
+			RAISE NOTICE 'already there: % % %', row.field, row.name, row.widget;
+		END IF;
 
-end;' language 'plpgsql';
-select inline_1 ();
-drop function inline_1();
+		insert into im_view_columns (column_id, view_id, column_name, column_render_tcl, sort_order) 
+		values (30200+v_pos, 301, row.name, '$'||row.field, 50+v_pos);
+
+		v_pos := v_pos + 10;
+	END LOOP;
+	return 0;
+end;$body$ language 'plpgsql';
+select inline_0();
+drop function inline_0();
 
 
-update im_view_columns set 
-	column_name = 'Program Name',
-	column_render_tcl = '"<A HREF=/intranet/projects/index?&filter_advanced_p=1&program_id=$project_id>[string range $project_name 0 30]</A>"'
-where	column_id = 30010;
+
+
+
+
