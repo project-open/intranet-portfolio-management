@@ -44,7 +44,7 @@ BEGIN
 		'portfolio',				-- label
 		'Portfolio',				-- name
 		'/intranet-portfolio-management/',	-- url
-		45,					-- sort_order
+		500,					-- sort_order
 		v_main_menu,				-- parent_menu_id
 		null					-- p_visible_tcl
 	);
