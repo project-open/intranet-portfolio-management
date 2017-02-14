@@ -87,7 +87,7 @@ if {[im_sencha_extjs_installed_p]} {
 
 
 if {"" eq [string trim $html]} {
-    set html "No projects found with budget or presales value or quotes"
+    set html "No projects found with a value for budget, presales value or quotes"
 }
 
 
