@@ -56,7 +56,8 @@ set sql "
 		(select url from im_biz_object_urls where object_type = 'im_project' and url_type = 'view') || p.project_id as url
 	from	im_projects p
 	where	p.parent_id is null and
-		p.project_status_id not in (select * from im_sub_categories([im_project_status_closed]))
+		p.project_status_id not in (select * from im_sub_categories([im_project_status_closed])) and
+		p.project_type_id not in (100)
 	order by p.project_id
 "
 

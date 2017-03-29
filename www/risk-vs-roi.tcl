@@ -42,6 +42,9 @@ if {![im_permission $current_user_id "view_projects_all"]} {
     ad_return_complaint 1 "You don't have the right to see all projects"
 }
 
+set default_hourly_cost [parameter::get_from_package_key -package_key "intranet-timesheet2" -parameter DefaultTimesheetHourlyCost -default 30]
+
+
 set html ""
 set sql "
 	select	coalesce(p.score_finance_roi, 0.0) as y_axis,
@@ -51,7 +54,13 @@ set sql "
 			from	im_risks r
 			where	r.risk_project_id = p.project_id and
 				r.risk_status_id not in (75098)			-- deleted
-		), 0.0) * 100.0 / coalesce(p.project_budget, p.presales_value, p.cost_quotes_cache, 0.0) as x_axis,
+		), 0.0) * 100.0 / coalesce(
+			p.project_budget, 
+			p.presales_value, 
+			p.cost_quotes_cache,
+			p.project_budget_hours * $default_hourly_cost,
+			0.0
+		) as x_axis,
 		case	when p.on_track_status_id = 66 then 'green'
 			when p.on_track_status_id = 67 then 'yellow'
 			when p.on_track_status_id = 68 then 'red'
@@ -61,8 +70,10 @@ set sql "
 		(select url from im_biz_object_urls where object_type = 'im_project' and url_type = 'view') || p.project_id as url
 	from	im_projects p
 	where	p.parent_id is null and
-		p.project_status_id not in (select * from im_sub_categories([im_project_status_closed])) and
-		coalesce(p.project_budget, p.presales_value, p.cost_quotes_cache, 0.0) > 0		 -- exclude project without value
+		p.project_type_id not in (100) and
+		p.project_status_id not in (select * from im_sub_categories([im_project_status_closed]))
+		-- exclude project without value
+		and coalesce(p.project_budget, p.presales_value, p.cost_quotes_cache, p.project_budget_hours, 0.0) > 0
 	order by p.project_id
 "
 
