@@ -42,6 +42,8 @@ if {![im_permission $current_user_id "view_projects_all"]} {
     ad_return_complaint 1 "You don't have the right to see all projects"
 }
 
+set default_hourly_cost [parameter::get_from_package_key -package_key "intranet-timesheet2" -parameter DefaultTimesheetHourlyCost -default 30]
+
 set html ""
 
 set sql "
@@ -51,13 +53,18 @@ set sql "
 			when p.on_track_status_id = 67 then 'yellow'
 			when p.on_track_status_id = 68 then 'red'
 		end as color,
-		sqrt(coalesce(p.project_budget, p.presales_value, 200.0)) / 10.0 as diameter,
+		sqrt(coalesce(
+			p.project_budget, 
+			p.presales_value,
+			p.project_budget_hours * $default_hourly_cost,
+			200.0
+		)) / 10.0 as diameter,
 		p.project_name as title,
 		(select url from im_biz_object_urls where object_type = 'im_project' and url_type = 'view') || p.project_id as url
 	from	im_projects p
 	where	p.parent_id is null and
 		p.project_status_id not in (select * from im_sub_categories([im_project_status_closed])) and
-		p.project_type_id not in (100)
+		p.project_type_id not in (100, 2510)   -- Task, Program
 	order by p.project_id
 "
 
