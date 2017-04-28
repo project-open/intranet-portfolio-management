@@ -398,7 +398,7 @@ ad_proc -public im_program_portfolio_list_component {
 		where
 			project_id = :program_id
 	"
-	im_audit -user_id $current_user_id -object_id $program_id -action "after_update" -object_type "im_project" -type_id $program_type_id -status_id $program_status_id -debug_p 1 -comment "Program update from im_program_portfolio_list_component"
+	im_audit -user_id $current_user_id -object_id $program_id -action "after_update" -object_type "im_project" -type_id $program_type_id -status_id $program_status_id -comment "Program update from im_program_portfolio_list_component"
 	set update_html "<font color=red>[lang::message::lookup "" intranet-portfolio-management.Updated_the_program_budget_and_advance "Updated the program's budget=%budget_total% and advance=%completed%"]</font>"
     }
 
