@@ -152,7 +152,7 @@ extra_select, extra_where, sort_order, visible_for) values (30000,300,'Ok',
 -- '"<A HREF=/intranet/projects/view?project_id=$project_id>$project_nr</A>"','','',1,'');
 
 insert into im_view_columns (column_id, view_id, column_name, column_render_tcl,
-extra_select, extra_where, sort_order, visible_for) values (30010,300,'Project Name',
+extra_select, extra_where, sort_order, visible_for) values (30010,300,'Program Name',
 '"<A HREF=/intranet/projects/index?&filter_advanced_p=1&program_id=$project_id&project_status_id=>[string range $project_name 0 30]</A>"','','',10,'');
 
 insert into im_view_columns (column_id, view_id, column_name, column_render_tcl,
