@@ -91,7 +91,7 @@ BEGIN
                 'intranet-portfolio-management',	-- package_name
                 'project_portfolio_list',		-- label
                 'Portfolio List', 			-- name
-                '/intranet/projects/index?view_name=project_portfolio_list',   -- url
+                '/intranet/projects/index?view_name=project_portfolio_list&exclude_project_type_id=2510',   -- url
                 55,                                     -- sort_order
                 (select menu_id from im_menus where label = 'portfolio'), -- parent_menu_id
                 null                                    -- p_visible_tcl
@@ -153,7 +153,7 @@ extra_select, extra_where, sort_order, visible_for) values (30000,300,'Ok',
 
 insert into im_view_columns (column_id, view_id, column_name, column_render_tcl,
 extra_select, extra_where, sort_order, visible_for) values (30010,300,'Project Name',
-'"<A HREF=/intranet/projects/index?&filter_advanced_p=1&program_id=$project_id>[string range $project_name 0 30]</A>"','','',10,'');
+'"<A HREF=/intranet/projects/index?&filter_advanced_p=1&program_id=$project_id&project_status_id=>[string range $project_name 0 30]</A>"','','',10,'');
 
 insert into im_view_columns (column_id, view_id, column_name, column_render_tcl,
 extra_select, extra_where, sort_order, visible_for) values (30020,300,'Start','$start_date_formatted','','',20,'');
@@ -168,7 +168,7 @@ insert into im_view_columns (column_id, view_id, column_name, column_render_tcl,
 extra_select, extra_where, sort_order, visible_for) values (30035,300,'Quoted','$cost_quotes_cache','','',35,'');
 
 insert into im_view_columns (column_id, view_id, column_name, column_render_tcl,
-extra_select, extra_where, sort_order, visible_for) values (30050,300,'Done','"$percent_completed%"','','',50,'');
+extra_select, extra_where, sort_order, visible_for) values (30050,300,'Done','[expr round(10.0 * $percent_completed) / 10.0]%','','',50,'');
 
 insert into im_view_columns (column_id, view_id, column_name, column_render_tcl,
 extra_select, extra_where, sort_order, visible_for) values (30080,300,'Plan Costs','$planned_costs','','',80,'');

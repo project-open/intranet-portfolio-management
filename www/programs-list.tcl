@@ -102,15 +102,11 @@ set view_order_by_clause ""
 set view_id [db_string get_view_id "select view_id from im_views where view_name=:view_name" -default 0]
 
 set column_sql "
-select
-	*
-from
-	im_view_columns
-where
-	view_id=:view_id
+select	*
+from	im_view_columns
+where	view_id=:view_id
 	and group_id is null
-order by
-	sort_order
+order by sort_order
 "
 
 db_foreach column_list_sql $column_sql {

@@ -102,6 +102,7 @@ ad_proc -public im_program_portfolio_list_component {
     # ---------------------------------------------------------------
     # Columns to show:
     set view_id [db_string get_view_id "select view_id from im_views where view_name = :view_name"]
+    set column_ids [list]
     set column_headers [list]
     set column_vars [list]
     set extra_selects [list]
@@ -110,6 +111,7 @@ ad_proc -public im_program_portfolio_list_component {
 
     set column_sql "
 	select	column_name,
+		column_id,
 		column_render_tcl,
 		visible_for,
 	        extra_where,
@@ -124,6 +126,7 @@ ad_proc -public im_program_portfolio_list_component {
 	if {"" == $visible_for || [eval $visible_for]} {
 	    lappend column_headers "$column_name"
 	    lappend column_vars "$column_render_tcl"
+	    lappend column_ids $column_id
 	}
 	if {"" != $extra_select} { lappend extra_selects $extra_select }
 	if {"" != $extra_from} { lappend extra_froms $extra_from }
@@ -233,17 +236,18 @@ ad_proc -public im_program_portfolio_list_component {
     set colspan [expr {[llength $column_headers] + 1}]
 
     set table_header_html "<tr>\n"
+    set ctr 0
     foreach col $column_headers {
-
+	set column_id [lindex $column_ids $ctr]
 	set admin_html ""
 	if {$admin_p} {
 	    set url [export_vars -base "/intranet/admin/views/new-column" {column_id return_url}]
 	    set admin_html "<a href='$url'>$wrench_gif</a>"
 	}
-
 	regsub -all " " $col "_" col_txt
 	set col_txt [lang::message::lookup "" intranet-core.$col_txt $col]
 	append table_header_html "  <td class=rowtitle>$col_txt $admin_html</td>\n"
+	incr ctr
     }
     append table_header_html "</tr>\n"
 
@@ -304,7 +308,7 @@ ad_proc -public im_program_portfolio_list_component {
 	if {!$cron_mode_p} {
 	    set row_html "<tr$bgcolor([expr {$ctr % 2}])>\n"
 	    foreach column_var $column_vars {
-		append row_html "\t<td valign=top>"
+		append row_html "\t<td>"
 		set cmd "append row_html $column_var"
 		eval "$cmd"
 		append row_html "</td>\n"
