@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <message_catalog package_key="intranet-portfolio-management" locale="en_US" charset="ISO-8859-1">
 
-  <msg key="Add_a_project_to_the_portfolio">Add a project to the program</msg>
+  <msg key="Add_a_project_to_the_portfolio">Add a project to the portfolio</msg>
   <msg key="FilterPrograms">Filter Programs</msg>
   <msg key="Programs">Programs</msg>
   <msg key="ProgramStatus">Program Status</msg>
