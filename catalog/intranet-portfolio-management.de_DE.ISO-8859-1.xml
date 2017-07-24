@@ -2,6 +2,7 @@
 <message_catalog package_key="intranet-portfolio-management" locale="de_DE" charset="ISO-8859-1">
 
   <msg key="FilterPrograms">Programme filtern</msg>
+  <msg key="Portfolio_List">Portfolio Liste</msg>
   <msg key="Programs">Programme</msg>
   <msg key="ProgramStatus">Programm Status</msg>
   <msg key="ProjectPrograms">Programme</msg>
