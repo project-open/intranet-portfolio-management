@@ -28,7 +28,7 @@ ad_page_contract {
 set user_id [auth::require_login]
 set subsite_id [ad_conn subsite_id]
 set current_user_id $user_id
-set page_title  [lang::message::lookup "" intranet-helpdesk.PageTitleHome "Portfolio Dashboard"]
+set page_title  [lang::message::lookup "" intranet-portfolio-management.Portfolio_Dashboard "Portfolio Dashboard"]
 set page_focus "im_header_form.keywords"
 set current_url [ns_conn url]
 set return_url "/intranet/"
