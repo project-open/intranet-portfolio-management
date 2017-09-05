@@ -8,6 +8,10 @@
   <msg key="Programs">Programs</msg>
   <msg key="ProgramStatus">Program Status</msg>
   <msg key="ProjectPrograms">Programs</msg>
+  <msg key="Risk_as_perc_of_budget">Risk as perc. of budget</msg>
   <msg key="Risk_vs__ROI">Risk vs. ROI</msg>
+  <msg key="Risk_vs_ROI">Risk vs. ROI</msg>
+  <msg key="ROI_months">ROI months</msg>
   <msg key="Strategic_Value_vs__ROI">Strategic Value vs. ROI</msg>
+  <msg key="Strategic_Value_vs_ROI">Strategic Value vs. ROI</msg>
 </message_catalog>
