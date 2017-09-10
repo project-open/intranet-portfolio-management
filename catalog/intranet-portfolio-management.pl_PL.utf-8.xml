@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<message_catalog package_key="intranet-portfolio-management" locale="pl_PL" charset="utf-8">
+
+  <msg key="Add_a_project_to_the_portfolio">Dodaj projekt do portfelu</msg>
+  <msg key="FilterPrograms">Filtruj programy</msg>
+  <msg key="Portfolio_Dashboard">Tablica portfeli</msg>
+  <msg key="Portfolio_List">Lista portfeli</msg>
+  <msg key="Programs">Programy</msg>
+  <msg key="ProgramStatus">Status programu</msg>
+  <msg key="ProjectPrograms">Programy</msg>
+  <msg key="Risk_as_perc_of_budget">Ryzyko jako procent budżetu</msg>
+  <msg key="Risk_vs__ROI">Ryzyko vs. ROI</msg>
+  <msg key="Risk_vs_ROI">Ryzyko vs ROI</msg>
+  <msg key="ROI_months">Miesiące ROI</msg>
+  <msg key="Strategic_Value_vs__ROI">Wartość strategiczna vs. ROI</msg>
+  <msg key="Strategic_Value_vs_ROI">Wartość strategiczna vs ROI</msg>
+</message_catalog>
