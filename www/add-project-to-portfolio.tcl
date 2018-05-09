@@ -87,7 +87,9 @@ db_multirow -extend { project_url project_chk} project_list select_project_list 
 	from	im_projects p
 	where	p.parent_id is null and
 		p.project_status_id in (select * from im_sub_categories ([im_project_status_open])) and
-		p.project_type_id not in ([im_project_type_task], [im_project_type_ticket])
+		p.project_type_id not in ([join [im_sub_categories [im_project_type_task]] ","]) and
+		p.project_type_id not in ([join [im_sub_categories [im_project_type_ticket]] ","]) and
+		p.project_type_id not in ([join [im_sub_categories [im_project_type_program]] ","])
 	order by
 		lower(project_name)
 " {
