@@ -1,5 +1,8 @@
 <master>
 
+
+<% im_sencha_extjs_load_libraries %>
+
 <script>
 Ext.require('Ext.chart.*');
 Ext.require(['Ext.layout.container.Fit', 'Ext.window.MessageBox']);
