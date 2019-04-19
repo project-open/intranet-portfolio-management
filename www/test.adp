@@ -11,10 +11,10 @@ Ext.onReady(function () {
     var store = Ext.create('Ext.data.JsonStore', {
         fields: ['year', 'comedy', 'action', 'drama', 'thriller'],
         data: [
-                {year: 2005, comedy: 34000000, action: 23890000, drama: 18450000, thriller: 20060000},
-                {year: 2006, comedy: 56703000, action: 38900000, drama: 12650000, thriller: 21000000},
-                {year: 2007, comedy: 42100000, action: 50410000, drama: 25780000, thriller: 23040000},
-                {year: 2008, comedy: 38910000, action: 56070000, drama: 24810000, thriller: 26940000}
+                {year: new Date('2005-01-01'), comedy: 34000000, action: 23890000, drama: 18450000, thriller: 20060000},
+                {year: new Date('2006-01-01'), comedy: 56703000, action: 38900000, drama: 12650000, thriller: 21000000},
+                {year: new Date('2007-01-01'), comedy: 42100000, action: 50410000, drama: 25780000, thriller: 23040000},
+                {year: new Date('2008-01-01'), comedy: 38910000, action: 56070000, drama: 24810000, thriller: 26940000}
               ]
     });
 
@@ -37,10 +37,14 @@ Ext.onReady(function () {
                     }
                 }
             }, {
-                type: 'Category',
+                type: 'Time',
                 position: 'left',
                 fields: ['year'],
-                title: false
+                title: false,
+		dateFormat: 'j M y',
+		constraint: false,
+		step: [Ext.Date.MONTH, 1],
+		label: {rotate: {degrees: 315}}
             }],
             series: [{
                 type: 'bar',
