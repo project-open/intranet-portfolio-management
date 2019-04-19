@@ -12,9 +12,14 @@ Ext.onReady(function () {
         fields: ['year', 'comedy', 'action', 'drama', 'thriller'],
         data: [
                 {year: new Date('2005-01-01'), comedy: 34000000, action: 23890000, drama: 18450000, thriller: 20060000},
-                {year: new Date('2006-01-01'), comedy: 56703000, action: 38900000, drama: 12650000, thriller: 21000000},
-                {year: new Date('2007-01-01'), comedy: 42100000, action: 50410000, drama: 25780000, thriller: 23040000},
-                {year: new Date('2008-01-01'), comedy: 38910000, action: 56070000, drama: 24810000, thriller: 26940000}
+                {year: new Date('2005-02-01'), comedy: 56703000, action: 38900000, drama: 12650000, thriller: 21000000},
+                {year: new Date('2005-03-01'), comedy: 42100000, action: 50410000, drama: 25780000, thriller: 23040000},
+                {year: new Date('2005-04-01'), comedy: 38910000, action: 56070000, drama: 24810000, thriller: 26940000},
+                {year: new Date('2005-05-01'), comedy: 34000000, action: 23890000, drama: 18450000, thriller: 20060000},
+                {year: new Date('2005-06-01'), comedy: 56703000, action: 38900000, drama: 12650000, thriller: 21000000},
+                {year: new Date('2005-07-01'), comedy: 42100000, action: 50410000, drama: 25780000, thriller: 23040000},
+                {year: new Date('2005-08-01'), comedy: 38910000, action: 56070000, drama: 24810000, thriller: 26940000}
+//                ,{year: new Date('2005-08-15')}
               ]
     });
 
@@ -27,7 +32,7 @@ Ext.onReady(function () {
             },
             axes: [{
                 type: 'Numeric',
-                position: 'bottom',
+                position: 'left',
                 fields: ['comedy', 'action', 'drama', 'thriller'],
                 title: false,
                 grid: true,
@@ -38,29 +43,31 @@ Ext.onReady(function () {
                 }
             }, {
                 type: 'Time',
-                position: 'left',
+                position: 'bottom',
                 fields: ['year'],
                 title: false,
 		dateFormat: 'j M y',
+		// toDate: new Date('2005-09-01'),
 		constraint: false,
 		step: [Ext.Date.MONTH, 1],
 		label: {rotate: {degrees: 315}}
             }],
             series: [{
-                type: 'bar',
-                axis: 'bottom',
+                type: 'column',
+                axis: 'left',
                 gutter: 80,
                 xField: 'year',
                 yField: ['comedy', 'action', 'drama', 'thriller'],
                 stacked: true,
+
                 tips: {
-                    trackMouse: true,
-                    width: 65,
-                    height: 28,
-                    renderer: function(storeItem, item) {
-                        this.setTitle(String(item.value[1] / 1000000) + 'M');
-                    }
-                }
+                     trackMouse: true,
+                     width: 65,
+                     height: 28,
+                     renderer: function(storeItem, item) {
+                         this.setTitle(String(item.value[1] / 1000000) + 'M');
+                     }
+                 }
             }]
         });
 
