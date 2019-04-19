@@ -100,7 +100,8 @@ db_foreach audit $audit_sql {
 set status_sql "
 	select	c.category_id as status_id
 	from	im_categories c
-	where	c.category_type = 'Intranet Project Status'
+	where	c.category_type = 'Intranet Project Status' and
+		c.enabled_p = 't'
 	order by
 		coalesce(sort_order, category_id)
 "
