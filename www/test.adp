@@ -19,7 +19,6 @@ Ext.onReady(function () {
                 {year: new Date('2005-06-01'), comedy: 56703000, action: 38900000, drama: 12650000, thriller: 21000000},
                 {year: new Date('2005-07-01'), comedy: 42100000, action: 50410000, drama: 25780000, thriller: 23040000},
                 {year: new Date('2005-08-01'), comedy: 38910000, action: 56070000, drama: 24810000, thriller: 26940000}
-//                ,{year: new Date('2005-08-15')}
               ]
     });
 
@@ -46,20 +45,18 @@ Ext.onReady(function () {
                 position: 'bottom',
                 fields: ['year'],
                 title: false,
-		dateFormat: 'j M y',
-		// toDate: new Date('2005-09-01'),
+		dateFormat: 'M y',
 		constraint: false,
-		step: [Ext.Date.MONTH, 1],
+		step: [Ext.Date.MONTH, 2],
 		label: {rotate: {degrees: 315}}
             }],
             series: [{
                 type: 'column',
-                axis: 'left',
+                axis: ['bottom'],
                 gutter: 80,
                 xField: 'year',
                 yField: ['comedy', 'action', 'drama', 'thriller'],
                 stacked: true,
-
                 tips: {
                      trackMouse: true,
                      width: 65,
