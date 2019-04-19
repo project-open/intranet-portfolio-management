@@ -470,3 +470,48 @@ ad_proc -public sencha_scatter_diagram {
 }
 
 
+
+
+# ---------------------------------------------------------------
+# Portfolio project status over time
+# ---------------------------------------------------------------
+
+ad_proc -public im_program_project_status_over_time_component {
+    -program_id
+    {-diagram_width 600}
+    {-diagram_height 500}
+    {-diagram_title ""}
+    {-diagram_default_interval "last_year" }
+    {-diagram_default_fact "number" }
+    {-diagram_min_start_date "2015-01-01" }
+} {
+    Returns a HTML component with a timeline of project states over time
+} {
+    # Sencha check and permissions
+    if {![im_sencha_extjs_installed_p]} { return "" }
+    im_sencha_extjs_load_libraries
+
+    # Is this a "Program" Project?
+    # The portfolio view only makes sense in programs...
+    db_1row program_inf "
+	select	project_type_id as program_type_id
+	from	im_projects
+	where	project_id = :program_id
+    "
+    if {![im_category_is_a $program_type_id [im_project_type_program]]} { return "" }
+
+    # Call the portlet page
+    set params [list \
+                    [list diagram_program_id $program_id] \
+                    [list diagram_width $diagram_width] \
+                    [list diagram_height $diagram_height] \
+                    [list diagram_title $diagram_title] \
+                    [list diagram_default_interval $diagram_default_interval] \
+                    [list diagram_default_fact $diagram_default_fact] \
+                    [list diagram_min_start_date $diagram_min_start_date] \
+    ]
+
+    set result [ad_parse_template -params $params "/packages/intranet-portfolio-management/lib/project-status"]
+    return [string trim $result]
+}
+
