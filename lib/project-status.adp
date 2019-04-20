@@ -14,7 +14,10 @@ Ext.onReady(function () {
 		diagram_program_id: '@diagram_program_id@'	//
             },
             reader: { type: 'json', root: 'data' }
-	}
+	},
+	data: [
+	    {'Date': new Date('@axis_to_date@'), '@first_status@': 0 }
+	]
     });
 
     var intervalStore = Ext.create('Ext.data.Store', {
@@ -36,7 +39,7 @@ Ext.onReady(function () {
     });
 
     var chart = Ext.create('Ext.chart.Chart',{
-        animate: true,
+        animate: false,
         shadow: true,
         store: statusStore,
         legend: { position: 'right' },
@@ -55,16 +58,31 @@ Ext.onReady(function () {
             dateFormat: 'j M y',
             constraint: false,
             step: [Ext.Date.MONTH, 1],
-//            toDate: new Date('@axis_to_date@'),
             label: {rotate: {degrees: 315}}
         }],
         series: [{
-            type: 'bar',
-            axis: 'bottom',
+            type: 'column',
+            axis: ['bottom'],
             gutter: 80,
             xField: 'Date',
             yField: @status_list_json;noquote@,
-            stacked: true
+            stacked: true,
+            tips: {
+                trackMouse: true,
+                width: 150,
+                height: 55,
+                renderer: function(storeItem, item) {
+		    var date = storeItem.get('Date');
+		    var dateIso = date.toISOString().substring(0,10);
+		    var statusField = item.yField;
+		    var storeValue = storeItem.get(statusField);
+                    this.setTitle(
+			'Date: '+dateIso+'<br>\n'+
+			'Status: '+statusField+'<br>\n'+
+			'#Projects: '+item.value[1]+'<br>\n'
+		    );
+                }
+            }
         }]
     });
 

@@ -39,6 +39,7 @@ set status_sql "
 		coalesce(sort_order, category_id)
 "
 set status_list [db_list status_list $status_sql]
+set first_status [lindex $status_list 0]
 # ad_return_complaint 1 $status_list
 
 
@@ -52,4 +53,5 @@ set header_json "\['[join $header_list "', '"]'\]"
 # Show Axis only until 1st of current month.
 # Everything within the current month is vague,
 # because invoices are probably not yet written...
+set axis_from_date [db_string to_date "select to_char(now()::date-31, 'YYYY-MM-01')"]
 set axis_to_date [db_string to_date "select to_char(now(), 'YYYY-MM-01')"]
