@@ -479,7 +479,7 @@ ad_proc -public sencha_scatter_diagram {
 ad_proc -public im_program_project_status_over_time_component {
     -program_id
     {-diagram_width 600}
-    {-diagram_height 500}
+    {-diagram_height 400}
     {-diagram_title ""}
     {-diagram_default_interval "last_year" }
     {-diagram_default_fact "number" }

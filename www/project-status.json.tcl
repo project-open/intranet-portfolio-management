@@ -73,6 +73,8 @@ set audit_sql "
 		from	im_projects p,
 			im_month_enumerator(:diagram_start_date::date, :diagram_end_date::date)
 		where	p.parent_id is null and
+			p.project_status_id not in ([im_project_status_deleted]) and
+			p.project_type_id not in ([im_project_type_program]) and
 			p.end_date > :diagram_start_date
 			$program_sql
 		) a

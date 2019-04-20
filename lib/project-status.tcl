@@ -34,7 +34,8 @@ set status_sql "
 	select	im_category_from_id(c.category_id) as status
 	from	im_categories c
 	where	c.category_type = 'Intranet Project Status' and
-		c.enabled_p = 't'
+		c.enabled_p = 't' and
+		c.category_id not in ([im_project_status_deleted])
 	order by
 		coalesce(sort_order, category_id)
 "
