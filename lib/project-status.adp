@@ -3,7 +3,7 @@
 Ext.require(['Ext.chart.*', 'Ext.Window', 'Ext.fx.target.Sprite', 'Ext.layout.container.Fit']);
 Ext.onReady(function () {
 
-    statusStore = Ext.create('Ext.data.Store', {
+    var statusStore = Ext.create('Ext.data.Store', {
         fields: @header_json;noquote@,
 	autoLoad: true,
 	proxy: {
@@ -16,7 +16,7 @@ Ext.onReady(function () {
             reader: { type: 'json', root: 'data' }
 	},
 	data: [
-	    {'Date': new Date('@axis_to_date@'), '@first_status@': 0 }
+	    {'Date': new Date('@axis_to_date@'), '@first_status@': 0.00 }
 	]
     });
 
@@ -49,16 +49,22 @@ Ext.onReady(function () {
             fields: @status_list_json;noquote@,
             title: false,
             grid: false,
-            label: { renderer: function(v) { return String(v).replace(/(.)00000$/, '.$1M'); } }
+	    decimals: 1,
+	    constrain: true,
+            label: { 
+		// renderer: function(v) { return String(v).replace(/(.)00000$/, '.$1M'); } 
+	    }
         }, {
             title: false,
-            type: 'Time',
+            type: 'Category',
             position: 'bottom',
             fields: ['Date'],
-            dateFormat: 'j M y',
-            constraint: false,
-            step: [Ext.Date.MONTH, 1],
-            label: {rotate: {degrees: 315}}
+	    label: {
+		rotate: {degrees: 315},
+                renderer: function(v) {
+		    return Ext.Date.format(v, 'M y'); 
+                }
+	    }
         }],
         series: [{
             type: 'column',
@@ -135,6 +141,8 @@ Ext.onReady(function () {
         ],
         items: chart
     });
+
+    statusStore.load();
 });
 </script>
 

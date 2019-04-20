@@ -45,9 +45,9 @@ Ext.onReady(function () {
                 position: 'bottom',
                 fields: ['year'],
                 title: false,
-		dateFormat: 'M y',
+		dateFormat: 'j M y',
 		constraint: false,
-		step: [Ext.Date.MONTH, 2],
+		step: [Ext.Date.MONTH, 1],
 		label: {rotate: {degrees: 315}}
             }],
             series: [{
