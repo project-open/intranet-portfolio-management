@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<message_catalog package_key="intranet-portfolio-management" locale="nl_NL" charset="ISO-8859-1">
+
+  <msg key="Add_a_project_to_the_portfolio">Voeg project toe aan portfolio</msg>
+  <msg key="FilterPrograms">Filter programma&#39;s</msg>
+  <msg key="Portfolio_Dashboard">Portfolio dasboard</msg>
+  <msg key="Portfolio_List">Portfolio Lijst</msg>
+  <msg key="Programs">Programma&#39;s</msg>
+  <msg key="ProgramStatus">Programma status</msg>
+  <msg key="ProjectPrograms">Programma&#39;s</msg>
+  <msg key="Risk_as_perc_of_budget">Risico als perc. van budget</msg>
+  <msg key="Risk_vs__ROI">Risico vs. ROI</msg>
+  <msg key="Risk_vs_ROI">Risico vs ROI</msg>
+  <msg key="ROI_months">ROI maanden</msg>
+  <msg key="Strategic_Value_vs__ROI">Strategische waarde vs. ROI </msg>
+  <msg key="Strategic_Value_vs_ROI">Strategische waarde vs. ROI</msg>
+</message_catalog>
