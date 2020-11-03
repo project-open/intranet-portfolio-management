@@ -49,12 +49,7 @@ list::create \
     -bulk_action_export_vars { program_id return_url } \
     -elements {
         project_chk {
-            label "<input type=\"checkbox\"
-                          name=\"_dummy\"
-                          onclick=\"acs_ListCheckAll('project_list', this.checked)\"
-                          title=\"Check/uncheck all rows\"
-                          unchecked
-            >"
+            label "<input type=\"checkbox\" name=\"_dummy\" title=\"Check/uncheck all rows\" unchecked>"
             display_template {
                 @project_list.project_chk;noquote@
             }

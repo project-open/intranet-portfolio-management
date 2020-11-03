@@ -3,7 +3,7 @@
 
 <% im_sencha_extjs_load_libraries %>
 
-<script>
+<script  type="text/javascript" <if @::__csp_nonce@ not nil>nonce="@::__csp_nonce;literal@"</if>>
 Ext.require('Ext.chart.*');
 Ext.require(['Ext.layout.container.Fit', 'Ext.window.MessageBox']);
 

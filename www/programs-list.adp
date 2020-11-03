@@ -4,6 +4,14 @@
 <property name="main_navbar_label">project_programs</property>
 <property name="left_navbar">@left_navbar_html;literal@</property>
 
+<!-- Show calendar on start- and end-date -->
+<script type="text/javascript" <if @::__csp_nonce@ not nil>nonce="@::__csp_nonce;literal@"</if>>
+window.addEventListener('load', function() { 
+     document.getElementById('start_date_calendar').addEventListener('click', function() { showCalendar('start_date', 'y-m-d'); });
+     document.getElementById('end_date_calendar').addEventListener('click', function() { showCalendar('end_date', 'y-m-d'); });
+});
+</script>
+
 @program_table_html;noquote@
 
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
