@@ -1,4 +1,4 @@
-# /packages/intranet-portfolio-management/www/project_status.json.tcl
+# /packages/intranet-portfolio-management/www/project-status.json.tcl
 #
 # Copyright (C) 2019 ]project-open[
 #
@@ -125,6 +125,7 @@ set months [qsort [array names date_hash]]
 
 
 set cnt 0
+set rows {}
 foreach month $months {
     set line [list "'Date': new Date(\"$month\")"]
 
