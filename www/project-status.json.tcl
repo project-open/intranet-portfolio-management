@@ -123,7 +123,6 @@ set months [qsort [array names date_hash]]
 # Start looping
 # ----------------------------------------------------
 
-
 set cnt 0
 set rows {}
 foreach month $months {
