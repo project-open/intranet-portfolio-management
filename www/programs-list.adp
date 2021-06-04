@@ -1,7 +1,7 @@
 <master>
 <property name="doc(title)">@page_title;literal@</property>
 <property name="context">#intranet-core.context#</property>
-<property name="main_navbar_label">project_programs</property>
+<property name="main_navbar_label">portfolio</property>
 <property name="left_navbar">@left_navbar_html;literal@</property>
 
 <!-- Show calendar on start- and end-date -->
